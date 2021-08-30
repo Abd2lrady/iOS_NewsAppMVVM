@@ -14,9 +14,19 @@ class WebService {
                 print(error.localizedDescription)
             }
             if let articlesData = data {
-                let articleList = try? JSONDecoder().decode(ArticleList.self, from: articlesData)
-                completionHandler(articleList?.articles)
-                print(articleList?.articles)
+                  do {
+                    let decoder = JSONDecoder()
+                    let articles = try decoder.decode(ArticleList.self, from: articlesData)
+                    completionHandler(articles.articles)
+                    print(articles.articles)
+                }  catch let DecodingError.dataCorrupted(context){
+                    print(context.debugDescription)
+                  } catch let DecodingError.keyNotFound(key, context) {
+                    print(key, context.debugDescription)
+                  }
+                  catch{
+                    print(error)
+                  }
         }
     }.resume()
     }

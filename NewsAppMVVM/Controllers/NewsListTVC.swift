@@ -28,8 +28,8 @@ class NewsListTVC: UITableViewController {
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return articleListVM.numberOfSections
-//        return self.articleListVM == nil ? 0 : self.articleListVM.numberOfSections
+//        return articleListVM.numberOfSections
+        return self.articleListVM == nil ? 0 : self.articleListVM.numberOfSections
     }
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return articleListVM.numberOfRows
@@ -39,7 +39,7 @@ class NewsListTVC: UITableViewController {
         else {fatalError("cell no found")}
         let articleVM = articleListVM.articleAtIndex(at: indexPath.row)
         articleCell.titleLabel.text = articleVM.title
-        articleCell.descriptionLabel.text = articleVM.description
+        articleCell.descriptionLabel.text = articleVM.description ?? ""
         return articleCell
     }
 }
